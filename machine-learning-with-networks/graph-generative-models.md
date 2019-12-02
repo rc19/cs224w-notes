@@ -42,3 +42,5 @@ Now we have seen how to generate a graph assuming we have a trained model. But h
 
 Now we can generate graphs by sampling from a distribution learned by our model. But, the major challenge still remains. Since any node can connect to any prior node, we need to generate half of the adjacency matrix which can turn out be extremely inefficient due to the problem of quadratic explosion(see above). To tackle this, we generate the node sequence in a BFS manner. This reduces the possible node orderings from O(n!) to a comparatively small distict BFS orderings and also reduces the number of steps for the edge generation (since now the model doesn't need to check for all the nodes for connectivity as the node can only connect to its predecessors in the BFS tree) as shown in the following figure.
 ![bfs_ordering](../assets/img/bfs_ordering.png?style=centerme)
+
+### Further reading: [GraphRNN: Generating Realistic Graphs with Deep Auto-regressive Models (ICML 2018)](https://cs.stanford.edu/people/jure/pubs/graphrnn-icml18.pdf)
