@@ -34,3 +34,11 @@ GraphRNN has a node-level RNN and an edge-level RNN. The two RNNs are related as
 1. Node-level RNN generates the initial state for edge-level RNN
 2. Edge-level RNN generates edges for the new node, then updates node-level RNN state using generated results
 
+This results in the following architecture. Notice that the model is auto-regressive as the output of the present RNN cell is fed as input to the next RNN cell. Also to make the model more expressive and model a probability distribution, the input is sampled from the previous cell output assuming a bernoulli distribution. Hence at the inference time we just pass the special "Start of Sequence(SOS)" token to start the process of sequence generation which happens until an "End of Sequence(EOS)" token is generated. 
+![rnn_inference](../assets/img/rnn_inference.png?style=centerme)
+
+Now we have seen how to generate a graph assuming we have a trained model. But how do we train it? We use the teacher-forcing technique to train the model and replace the input and output bu the actual sequence as shown below ans use the standard **binary cross-entropy loss** as the optimization objective which is backpropagated through time(BPTT) to update the model parameters.
+![rnn_training](../assets/img/rnn_training.png?style=centerme)
+
+Now we can generate graphs by sampling from a distribution learned by our model. But, the major challenge still remains. Since any node can connect to any prior node, we need to generate half of the adjacency matrix which can turn out be extremely inefficient due to the problem of quadratic explosion(see above). To tackle this, we generate the node sequence in a BFS manner. This reduces the possible node orderings from O(n!) to a comparatively small distict BFS orderings and also reduces the number of steps for the edge generation(since now the model doesn't need to check for all the nodes for connectivity.) as shown in the following figure.
+![bfs_ordering](../assets/img/bfs_ordering.png?style=centerme)
