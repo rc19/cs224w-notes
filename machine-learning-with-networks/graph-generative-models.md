@@ -26,7 +26,7 @@ In the [Node Representation learning](node-representation-learning.md) section, 
 ## GraphRNN
 The idea is to treat the task of graph generation as a sequence generation task. We want to model the probability distribution over the next "action" given the previous state of actions. In language modeling, the action is the word we are trying to predict. In the case of graph generation, the action is to add a node/edge. As discussed above, a graph can have multiple sequences associated with it($$O(n!)$$) but we can map out a unique sequence by ordering the nodes of the graph. 
 
-Once the node sequence is fixed, we can map the sequence in which the corresponding edges need to be added to the graph. Thus, the task of gepah generation can be equivalently transformed to a sequence generation problem at two levels, first at a node level and then at the edge level. Since RNN are well known for their sequence generation capabilities, we will study how they can be utilized for this task.
+Once the node sequence is fixed, we can map the sequence in which the corresponding edges need to be added to the graph. Thus, the task of graph generation can be equivalently transformed to a sequence generation problem at two levels, first at a node level and then at the edge level. Since RNN are well known for their sequence generation capabilities, we will study how they can be utilized for this task.
 ![node_sequence](../assets/img/node_sequence.png?style=centerme)
 ![edge_sequence](../assets/img/edge_sequence.png?style=centerme)
 
